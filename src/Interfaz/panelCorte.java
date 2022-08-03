@@ -7,6 +7,7 @@ package Interfaz;
 
 import Controllers.*;
 import EntityClasses.*;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -130,9 +131,9 @@ public class panelCorte extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        txtNombreEmpleado = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        txtPorcentaje = new javax.swing.JLabel();
         txtMensajeCorteRe = new javax.swing.JLabel();
         txtMensajeCodUsu = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -202,17 +203,19 @@ public class panelCorte extends javax.swing.JPanel {
         jLabel7.setText("Nombre de empleado: ");
         add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, 30));
 
-        jLabel8.setFont(new java.awt.Font("Roboto Medium", 0, 15)); // NOI18N
-        jLabel8.setText("Nombre empleado");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 230, -1));
+        txtNombreEmpleado.setFont(new java.awt.Font("Roboto Medium", 0, 15)); // NOI18N
+        txtNombreEmpleado.setForeground(new java.awt.Color(153, 153, 153));
+        txtNombreEmpleado.setText("Nombre empleado");
+        add(txtNombreEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 230, -1));
 
         jLabel9.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
         jLabel9.setText("Porcentaje de comisión: ");
         add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 130, -1, 30));
 
-        jLabel10.setFont(new java.awt.Font("Roboto Medium", 0, 15)); // NOI18N
-        jLabel10.setText("0%");
-        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, 60, -1));
+        txtPorcentaje.setFont(new java.awt.Font("Roboto Medium", 0, 15)); // NOI18N
+        txtPorcentaje.setForeground(new java.awt.Color(153, 153, 153));
+        txtPorcentaje.setText("0%");
+        add(txtPorcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, 60, -1));
 
         txtMensajeCorteRe.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         add(txtMensajeCorteRe, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 520, 420, 30));
@@ -235,6 +238,8 @@ public class panelCorte extends javax.swing.JPanel {
         add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 190, -1, -1));
 
         btnBuscar.setBackground(new java.awt.Color(153, 153, 255));
+        btnBuscar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         txtBuscar.setFont(new java.awt.Font("Roboto Medium", 1, 15)); // NOI18N
         txtBuscar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -242,6 +247,12 @@ public class panelCorte extends javax.swing.JPanel {
         txtBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtBuscarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txtBuscarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txtBuscarMouseExited(evt);
             }
         });
 
@@ -253,13 +264,15 @@ public class panelCorte extends javax.swing.JPanel {
         );
         btnBuscarLayout.setVerticalGroup(
             btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(txtBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
         );
 
         add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 90, -1, 30));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 110, 140, 10));
 
         btnCalcCorte.setBackground(new java.awt.Color(153, 153, 255));
+        btnCalcCorte.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnCalcCorte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         txtCalcCorte.setFont(new java.awt.Font("Roboto Medium", 1, 15)); // NOI18N
         txtCalcCorte.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -268,6 +281,12 @@ public class panelCorte extends javax.swing.JPanel {
         txtCalcCorte.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtCalcCorteMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txtCalcCorteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txtCalcCorteMouseExited(evt);
             }
         });
         txtCalcCorte.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -284,12 +303,14 @@ public class panelCorte extends javax.swing.JPanel {
         );
         btnCalcCorteLayout.setVerticalGroup(
             btnCalcCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtCalcCorte, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(txtCalcCorte, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
         );
 
         add(btnCalcCorte, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 470, -1, 30));
 
         btnImpComp.setBackground(new java.awt.Color(153, 153, 255));
+        btnImpComp.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnImpComp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         txtImpComp.setFont(new java.awt.Font("Roboto Medium", 1, 15)); // NOI18N
         txtImpComp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -299,17 +320,23 @@ public class panelCorte extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtImpCompMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txtImpCompMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txtImpCompMouseExited(evt);
+            }
         });
 
         javax.swing.GroupLayout btnImpCompLayout = new javax.swing.GroupLayout(btnImpComp);
         btnImpComp.setLayout(btnImpCompLayout);
         btnImpCompLayout.setHorizontalGroup(
             btnImpCompLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtImpComp, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+            .addComponent(txtImpComp, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
         );
         btnImpCompLayout.setVerticalGroup(
             btnImpCompLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtImpComp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(txtImpComp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
         );
 
         add(btnImpComp, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 470, 180, 30));
@@ -357,10 +384,12 @@ public class panelCorte extends javax.swing.JPanel {
             //System.out.println(i);
             try{
             if(listLavador.get(i).getIdLavador() == Integer.parseInt(jTextField1.getText())){
+                txtNombreEmpleado.setForeground(Color.BLACK);
+                txtPorcentaje.setForeground(Color.BLACK);
                 txtMensajeCodUsu.setText("ID encontrado");
                 lavador = listLavador.get(i);
-                jLabel8.setText(lavador.getUsuarioidUsuario().getNombre());
-                jLabel10.setText(lavador.getComision()+" % ");
+                txtNombreEmpleado.setText(lavador.getUsuarioidUsuario().getNombre());
+                txtPorcentaje.setText(lavador.getComision()+" % ");
                 find = true;
                 break;
             }
@@ -557,6 +586,32 @@ public class panelCorte extends javax.swing.JPanel {
         txtImpComp.setEnabled(true);
         txtMensajeCorteRe.setText("CORTE REALIZADO CORRECTAMENTE");
     }//GEN-LAST:event_txtCalcCorteMouseClicked
+
+    private void txtBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuscarMouseEntered
+        btnBuscar.setBackground(new Color(202,217,203));//[214,217,223]
+    }//GEN-LAST:event_txtBuscarMouseEntered
+
+    private void txtBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuscarMouseExited
+        btnBuscar.setBackground(new Color(214,217,223));//214,217,223
+    }//GEN-LAST:event_txtBuscarMouseExited
+
+    private void txtImpCompMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtImpCompMouseEntered
+        btnImpComp.setBackground(new Color(202,217,203));//[214,217,223]
+    }//GEN-LAST:event_txtImpCompMouseEntered
+
+    private void txtImpCompMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtImpCompMouseExited
+        btnImpComp.setBackground(new Color(214,217,223));
+    }//GEN-LAST:event_txtImpCompMouseExited
+
+    private void txtCalcCorteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCalcCorteMouseEntered
+        btnCalcCorte.setBackground(new Color(202,217,203));//[214,217,223]
+    }//GEN-LAST:event_txtCalcCorteMouseEntered
+
+    private void txtCalcCorteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCalcCorteMouseExited
+        btnCalcCorte.setBackground(new Color(214,217,223));
+    }//GEN-LAST:event_txtCalcCorteMouseExited
+    
+    
     private String cortarCad(int i, int f, String cad){
         if(cad.length()>f){
             return cad.substring(i,f);
@@ -571,7 +626,6 @@ public class panelCorte extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDayChooser jDayChooser1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
@@ -580,7 +634,6 @@ public class panelCorte extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -596,5 +649,7 @@ public class panelCorte extends javax.swing.JPanel {
     private javax.swing.JLabel txtImpComp;
     private javax.swing.JLabel txtMensajeCodUsu;
     private javax.swing.JLabel txtMensajeCorteRe;
+    private javax.swing.JLabel txtNombreEmpleado;
+    private javax.swing.JLabel txtPorcentaje;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,6 +15,7 @@ import EntityClasses.Costoservicio;
 import EntityClasses.Servicio;
 import EntityClasses.Tamanio;
 import EntityClasses.Tipovehiculo;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
@@ -869,6 +870,8 @@ public class panelPrecio extends javax.swing.JPanel {
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 540));
 
         btnLimpiar.setBackground(new java.awt.Color(237, 193, 193));
+        btnLimpiar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         txtLimpiar.setFont(new java.awt.Font("Roboto Medium", 1, 15)); // NOI18N
         txtLimpiar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -877,22 +880,30 @@ public class panelPrecio extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtLimpiarMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txtLimpiarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txtLimpiarMouseExited(evt);
+            }
         });
 
         javax.swing.GroupLayout btnLimpiarLayout = new javax.swing.GroupLayout(btnLimpiar);
         btnLimpiar.setLayout(btnLimpiarLayout);
         btnLimpiarLayout.setHorizontalGroup(
             btnLimpiarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+            .addComponent(txtLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
         );
         btnLimpiarLayout.setVerticalGroup(
             btnLimpiarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(txtLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
         );
 
         add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 110, 90, 30));
 
         btnGuardar.setBackground(new java.awt.Color(237, 193, 193));
+        btnGuardar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         txtGuardar.setFont(new java.awt.Font("Roboto Medium", 1, 15)); // NOI18N
         txtGuardar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -900,6 +911,12 @@ public class panelPrecio extends javax.swing.JPanel {
         txtGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtGuardarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txtGuardarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                txtGuardarMouseExited(evt);
             }
         });
 
@@ -911,7 +928,7 @@ public class panelPrecio extends javax.swing.JPanel {
         );
         btnGuardarLayout.setVerticalGroup(
             btnGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(txtGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
         );
 
         add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 170, -1, 30));
@@ -1095,6 +1112,22 @@ public class panelPrecio extends javax.swing.JPanel {
             tf.requestFocus();
         }
     }//GEN-LAST:event_jTextField11FocusLost
+
+    private void txtLimpiarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLimpiarMouseEntered
+        btnLimpiar.setBackground(new Color(245, 185, 185));//[237,193,193]
+    }//GEN-LAST:event_txtLimpiarMouseEntered
+
+    private void txtLimpiarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLimpiarMouseExited
+        btnLimpiar.setBackground(new Color(237, 193, 193));//[237,193,193]
+    }//GEN-LAST:event_txtLimpiarMouseExited
+
+    private void txtGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtGuardarMouseEntered
+        btnGuardar.setBackground(new Color(245, 185, 185));//[237,193,193]
+    }//GEN-LAST:event_txtGuardarMouseEntered
+
+    private void txtGuardarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtGuardarMouseExited
+        btnGuardar.setBackground(new Color(237, 193, 193));//[237,193,193]
+    }//GEN-LAST:event_txtGuardarMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

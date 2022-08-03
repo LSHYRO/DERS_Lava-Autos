@@ -252,7 +252,12 @@
           <Color blue="ff" green="99" red="99" type="rgb"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder roundedCorners="true"/>
+          </Border>
+        </Property>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
         </Property>
       </Properties>
       <Constraints>
@@ -264,12 +269,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="txtAgregar" alignment="0" pref="120" max="32767" attributes="0"/>
+              <Component id="txtAgregar" alignment="0" pref="118" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="txtAgregar" alignment="1" pref="40" max="32767" attributes="0"/>
+              <Component id="txtAgregar" alignment="1" pref="38" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -299,7 +304,12 @@
           <Color blue="ff" green="99" red="99" type="rgb"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder roundedCorners="true"/>
+          </Border>
+        </Property>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
         </Property>
       </Properties>
       <Constraints>
@@ -311,12 +321,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="txtGuardarCambios" alignment="0" pref="140" max="32767" attributes="0"/>
+              <Component id="txtGuardarCambios" alignment="0" pref="138" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="txtGuardarCambios" alignment="1" pref="40" max="32767" attributes="0"/>
+              <Component id="txtGuardarCambios" alignment="1" pref="38" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -383,7 +393,12 @@
           <Color blue="ff" green="99" red="99" type="rgb"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder roundedCorners="true"/>
+          </Border>
+        </Property>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Mano"/>
         </Property>
       </Properties>
       <Constraints>
@@ -395,12 +410,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="txtEliminarUser" alignment="0" pref="140" max="32767" attributes="0"/>
+              <Component id="txtEliminarUser" alignment="0" pref="138" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="txtEliminarUser" alignment="1" pref="40" max="32767" attributes="0"/>
+              <Component id="txtEliminarUser" alignment="1" pref="38" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

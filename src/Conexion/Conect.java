@@ -17,8 +17,9 @@ public class Conect {
     public static final String URL = "jdbc:mysql://127.0.0.1:3306/?user=root";
     public static final String USER = "root";
     public static final String CLAVE = "L4v4$25EDIN8";
-     
-    public static void main(String args[]){
+
+    public Conect() {
+        
         Connection con = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -26,6 +27,10 @@ public class Conect {
             System.out.println("Conexion realizada");
         }catch(Exception e){
             System.out.println("Error: " + e.getMessage());
-        }
+    }
+    
+    
+     
+    
     }
 }

@@ -5,6 +5,7 @@
  */
 package Interfaz;
 
+import Conexion.Conect;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.persistence.EntityManagerFactory;
@@ -27,6 +28,7 @@ public class interfaz_Principal extends javax.swing.JFrame {
      * Creates new form interfaz_Principal
      */
     public interfaz_Principal() {
+        
         initComponents();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("LavaAutos_DERSPU");
         setLocationRelativeTo(null);
@@ -149,7 +151,7 @@ public class interfaz_Principal extends javax.swing.JFrame {
         txtCobro.setFont(new java.awt.Font("Roboto Black", 1, 16)); // NOI18N
         txtCobro.setForeground(new java.awt.Color(255, 255, 255));
         txtCobro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtCobro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/carro (1).png"))); // NOI18N
+        txtCobro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/auto blanco (1).png"))); // NOI18N
         txtCobro.setText(" COBRO   ");
         txtCobro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -184,7 +186,7 @@ public class interfaz_Principal extends javax.swing.JFrame {
         txtCorte.setFont(new java.awt.Font("Roboto Black", 1, 16)); // NOI18N
         txtCorte.setForeground(new java.awt.Color(255, 255, 255));
         txtCorte.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtCorte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/corte (1).png"))); // NOI18N
+        txtCorte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/corteCaj (1).png"))); // NOI18N
         txtCorte.setText(" CORTE   ");
         txtCorte.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -219,7 +221,7 @@ public class interfaz_Principal extends javax.swing.JFrame {
         txtAdmin.setFont(new java.awt.Font("Roboto Black", 1, 16)); // NOI18N
         txtAdmin.setForeground(new java.awt.Color(255, 255, 255));
         txtAdmin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/admin (1).png"))); // NOI18N
+        txtAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/administrador(1) (1).png"))); // NOI18N
         txtAdmin.setText(" ADMIN   ");
         txtAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -414,6 +416,7 @@ public class interfaz_Principal extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        Conect conexion = new Conect(); 
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -436,9 +439,10 @@ public class interfaz_Principal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(interfaz_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
             public void run() {
                 new interfaz_Principal().setVisible(true);
             }

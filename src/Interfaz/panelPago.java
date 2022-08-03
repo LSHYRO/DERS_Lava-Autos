@@ -196,15 +196,15 @@ public class panelPago extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        numIdCorte = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        txtNombreLav = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        txtFecha = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
@@ -241,10 +241,24 @@ public class panelPago extends javax.swing.JPanel {
         jLabel5.setText("ID del corte: ");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 108, -1, 20));
 
-        jTextField1.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
-        jTextField1.setText("Ingresa el ID del corte");
-        jTextField1.setBorder(null);
-        add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, 200, -1));
+        numIdCorte.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
+        numIdCorte.setForeground(new java.awt.Color(153, 153, 153));
+        numIdCorte.setText("Ingresa el ID del corte");
+        numIdCorte.setBorder(null);
+        numIdCorte.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                numIdCorteFocusLost(evt);
+            }
+        });
+        numIdCorte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                numIdCorteMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                numIdCorteMouseReleased(evt);
+            }
+        });
+        add(numIdCorte, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, 200, -1));
 
         jTable1.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -282,22 +296,36 @@ public class panelPago extends javax.swing.JPanel {
         jLabel6.setText("El corte es del empleado:  ");
         add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, -1, 20));
 
-        jLabel7.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
-        jLabel7.setText("******");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, 80, -1));
+        txtNombreLav.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
+        txtNombreLav.setForeground(new java.awt.Color(102, 102, 102));
+        txtNombreLav.setText("******");
+        txtNombreLav.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtNombreLavMousePressed(evt);
+            }
+        });
+        add(txtNombreLav, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, 80, -1));
 
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
         jLabel8.setText("A la fecha:");
         add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, -1, -1));
 
-        jLabel9.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
-        jLabel9.setText("*****");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 170, 110, -1));
+        txtFecha.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
+        txtFecha.setForeground(new java.awt.Color(102, 102, 102));
+        txtFecha.setText("*****");
+        txtFecha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtFechaMousePressed(evt);
+            }
+        });
+        add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 170, 110, -1));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 190, 110, 10));
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 200, 10));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, 80, 10));
 
         btnBuscar.setBackground(new java.awt.Color(255, 204, 204));
+        btnBuscar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         txtBuscar.setFont(new java.awt.Font("Roboto Medium", 1, 15)); // NOI18N
         txtBuscar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -322,12 +350,14 @@ public class panelPago extends javax.swing.JPanel {
         );
         btnBuscarLayout.setVerticalGroup(
             btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(txtBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
         );
 
         add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, -1, 30));
 
         btnRealizarPagar.setBackground(new java.awt.Color(255, 204, 204));
+        btnRealizarPagar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnRealizarPagar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRealizarPagar.setEnabled(false);
 
         txtRealizarPagar.setFont(new java.awt.Font("Roboto Medium", 1, 15)); // NOI18N
@@ -355,7 +385,7 @@ public class panelPago extends javax.swing.JPanel {
         );
         btnRealizarPagarLayout.setVerticalGroup(
             btnRealizarPagarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtRealizarPagar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(txtRealizarPagar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
         );
 
         add(btnRealizarPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 170, -1, 30));
@@ -388,12 +418,12 @@ public class panelPago extends javax.swing.JPanel {
             jLabel10.setText("Al parecer no se ha realizado ningun corte");
             return;
         }
-        if (jTextField1.getText() == "" || jTextField1.getText() == null) {
+        if (numIdCorte.getText() == "" || numIdCorte.getText() == null) {
             jLabel10.setText("Ingresa un ID de corte");
             return;
         }
         try {
-            idcorte = Integer.parseInt(jTextField1.getText());
+            idcorte = Integer.parseInt(numIdCorte.getText());
             for (Corte cut : listCorte) {
                 if (idcorte == cut.getIdCorte()) {
                     find = true;
@@ -403,9 +433,11 @@ public class panelPago extends javax.swing.JPanel {
                     java.sql.Date fecha1 = new java.sql.Date(sfecha);
                     //System.out.println("fecha: "+cut.getFecha().getMonth()+" dia "+cut.getFecha().getDay());
                     jLabel11.setText("Id encontrado");
-                    jLabel7.setText(cut.getLavadoridLavador().getUsuarioidUsuario().getNombre());
-                    jLabel9.setText(""+fecha1);
+                    txtNombreLav.setText(cut.getLavadoridLavador().getUsuarioidUsuario().getNombre());
+                    txtFecha.setText(""+fecha1);
                     btnRealizarPagar.setEnabled(true);
+                    txtNombreLav.setForeground(Color.BLACK);
+                    txtFecha.setForeground(Color.BLACK);
                     break;
                 }
             }
@@ -467,6 +499,32 @@ public class panelPago extends javax.swing.JPanel {
         btnRealizarPagar.setBackground(new Color(255, 204, 204));//[255,204,204]
     }//GEN-LAST:event_txtRealizarPagarMouseExited
 
+    private void numIdCorteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_numIdCorteMousePressed
+        if(numIdCorte.getText().equalsIgnoreCase("Ingresa el ID del corte")){
+            numIdCorte.setText("");
+            numIdCorte.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_numIdCorteMousePressed
+
+    private void txtNombreLavMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNombreLavMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreLavMousePressed
+
+    private void txtFechaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtFechaMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFechaMousePressed
+
+    private void numIdCorteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_numIdCorteMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numIdCorteMouseReleased
+
+    private void numIdCorteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_numIdCorteFocusLost
+        if(numIdCorte.getText().equalsIgnoreCase("Ingresa el ID del corte") || numIdCorte.getText().equalsIgnoreCase("")){
+            numIdCorte.setText("Ingresa el ID del corte");
+            numIdCorte.setForeground(Color.GRAY);
+        }
+    }//GEN-LAST:event_numIdCorteFocusLost
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnBuscar;
@@ -479,9 +537,7 @@ public class panelPago extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -490,8 +546,10 @@ public class panelPago extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField numIdCorte;
     private javax.swing.JLabel txtBuscar;
+    private javax.swing.JLabel txtFecha;
+    private javax.swing.JLabel txtNombreLav;
     private javax.swing.JLabel txtRealizarPagar;
     // End of variables declaration//GEN-END:variables
 }

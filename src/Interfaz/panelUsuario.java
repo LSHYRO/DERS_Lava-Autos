@@ -177,7 +177,8 @@ public class panelUsuario extends javax.swing.JPanel {
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 280, 40, 10));
 
         btnAgregar.setBackground(new java.awt.Color(153, 153, 255));
-        btnAgregar.setBorder(null);
+        btnAgregar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         txtAgregar.setFont(new java.awt.Font("Roboto Medium", 0, 15)); // NOI18N
         txtAgregar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -199,17 +200,18 @@ public class panelUsuario extends javax.swing.JPanel {
         btnAgregar.setLayout(btnAgregarLayout);
         btnAgregarLayout.setHorizontalGroup(
             btnAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+            .addComponent(txtAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
         );
         btnAgregarLayout.setVerticalGroup(
             btnAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtAgregar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(txtAgregar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
         );
 
         add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 330, 120, 40));
 
         btnGuardarCambios.setBackground(new java.awt.Color(153, 153, 255));
-        btnGuardarCambios.setBorder(null);
+        btnGuardarCambios.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnGuardarCambios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         txtGuardarCambios.setFont(new java.awt.Font("Roboto Medium", 0, 15)); // NOI18N
         txtGuardarCambios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -231,11 +233,11 @@ public class panelUsuario extends javax.swing.JPanel {
         btnGuardarCambios.setLayout(btnGuardarCambiosLayout);
         btnGuardarCambiosLayout.setHorizontalGroup(
             btnGuardarCambiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtGuardarCambios, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+            .addComponent(txtGuardarCambios, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
         );
         btnGuardarCambiosLayout.setVerticalGroup(
             btnGuardarCambiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtGuardarCambios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(txtGuardarCambios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
         );
 
         add(btnGuardarCambios, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 490, 140, 40));
@@ -259,7 +261,8 @@ public class panelUsuario extends javax.swing.JPanel {
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 140, 80, 80));
 
         btnEliminarUser.setBackground(new java.awt.Color(153, 153, 255));
-        btnEliminarUser.setBorder(null);
+        btnEliminarUser.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnEliminarUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         txtEliminarUser.setFont(new java.awt.Font("Roboto Medium", 0, 15)); // NOI18N
         txtEliminarUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -281,11 +284,11 @@ public class panelUsuario extends javax.swing.JPanel {
         btnEliminarUser.setLayout(btnEliminarUserLayout);
         btnEliminarUserLayout.setHorizontalGroup(
             btnEliminarUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtEliminarUser, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+            .addComponent(txtEliminarUser, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
         );
         btnEliminarUserLayout.setVerticalGroup(
             btnEliminarUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtEliminarUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(txtEliminarUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
         );
 
         add(btnEliminarUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 490, 140, 40));

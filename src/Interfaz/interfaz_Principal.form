@@ -192,7 +192,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/recursos/carro (1).png"/>
+                      <Image iconType="3" name="/recursos/auto blanco (1).png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value=" COBRO   "/>
                   </Properties>
@@ -246,7 +246,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/recursos/corte (1).png"/>
+                      <Image iconType="3" name="/recursos/corteCaj (1).png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value=" CORTE   "/>
                   </Properties>
@@ -300,7 +300,7 @@
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/recursos/admin (1).png"/>
+                      <Image iconType="3" name="/recursos/administrador(1) (1).png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value=" ADMIN   "/>
                   </Properties>

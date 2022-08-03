@@ -233,6 +233,8 @@ public class panelCobro extends javax.swing.JPanel {
         add(dineroIngresado, new org.netbeans.lib.awtextra.AbsoluteConstraints(621, 480, 100, -1));
 
         btnAceptar.setBackground(new java.awt.Color(102, 153, 255));
+        btnAceptar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnAceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         txtAceptar.setFont(new java.awt.Font("Roboto Medium", 0, 15)); // NOI18N
         txtAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -255,11 +257,11 @@ public class panelCobro extends javax.swing.JPanel {
         btnAceptar.setLayout(btnAceptarLayout);
         btnAceptarLayout.setHorizontalGroup(
             btnAceptarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+            .addComponent(txtAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
         );
         btnAceptarLayout.setVerticalGroup(
             btnAceptarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtAceptar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(txtAceptar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
         );
 
         add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 90, 110, 30));
@@ -280,6 +282,8 @@ public class panelCobro extends javax.swing.JPanel {
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 500, 110, -1));
 
         btnCobrar.setBackground(new java.awt.Color(102, 153, 255));
+        btnCobrar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        btnCobrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         txtCobro.setFont(new java.awt.Font("Roboto Medium", 0, 15)); // NOI18N
         txtCobro.setForeground(new java.awt.Color(255, 255, 255));
@@ -302,11 +306,11 @@ public class panelCobro extends javax.swing.JPanel {
         btnCobrar.setLayout(btnCobrarLayout);
         btnCobrarLayout.setHorizontalGroup(
             btnCobrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtCobro, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+            .addComponent(txtCobro, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
         );
         btnCobrarLayout.setVerticalGroup(
             btnCobrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtCobro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(txtCobro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
         );
 
         add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 470, 110, 30));
@@ -867,8 +871,8 @@ public class panelCobro extends javax.swing.JPanel {
         String articulos = "";
         //"======SERVICIOS SOLICITADOS=====\n"
         for (Costoservicio DES : lo) {
-            articulos += String.format("%-26s %.2f\n",
-                    cortarCad(0, 26, DES.getServicioidServicio().getNombreServicio()), DES.getPrecio());
+            articulos += String.format("%-25s %.1f\n",
+                    cortarCad(0, 24, DES.getServicioidServicio().getNombreServicio()), DES.getPrecio());
         }
         return articulos;
     }
