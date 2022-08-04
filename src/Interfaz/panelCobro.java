@@ -8,6 +8,7 @@ package Interfaz;
 import Controllers.*;
 import EntityClasses.*;
 import java.awt.Color;
+import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,8 +20,11 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.print.PrintException;
 import javax.swing.JComboBox;
 import modelos.TicketVenta;
 
@@ -719,7 +723,9 @@ public class panelCobro extends javax.swing.JPanel {
                     tTamañoV.setEnabled(true);
                     tlavado.setEnabled(true);
                     tExceso.setEnabled(true);
-                    
+                    btnCobrar.setEnabled(true);
+                    txtCobro.setEnabled(true);
+
                     nombreCliente.setText("Ingrese el nombre del cliente");
                     marca.setText("Ingrese la marca");
                     modelo.setText("Ingrese el modelo");
@@ -727,7 +733,6 @@ public class panelCobro extends javax.swing.JPanel {
                     placas.setText("Ingrese las placas");
                     dineroIngresado.setText("");
                     cambio.setText("");
-                    
 
                     btnAceptar.setEnabled(false);
                     txtAceptar.setEnabled(false);
@@ -735,9 +740,9 @@ public class panelCobro extends javax.swing.JPanel {
 
                     cambio.setText("");
                     tamañoVehiculoCB.setSelectedIndex(0);
-                        
-                    
+
                     repaint();
+                    return;
                 } else {
                     txtMensajeSesion.setText("ID erroneo");
                     txtMensajeSesion.setForeground(Color.red);
@@ -833,6 +838,14 @@ public class panelCobro extends javax.swing.JPanel {
                         tv.setCambio(cambio.getText());
                         tv.setHora(hor);
                         System.out.println(tv.imprimirTicket());
+                        try {
+                            //tv.printIMG();
+                            tv.print(true);
+                        } catch (IOException ex) {
+                            Logger.getLogger(panelCobro.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (PrintException ex) {
+                            Logger.getLogger(panelCobro.class.getName()).log(Level.SEVERE, null, ex);
+                        }
 
                         placas.setText("Ingrese las placas");
                         btnAceptar.setEnabled(true);
@@ -840,6 +853,10 @@ public class panelCobro extends javax.swing.JPanel {
                         idUsuario.setEnabled(true);
                         idUsuario.setText("");
                         desactivar();
+
+                        for (int ef = 0; ef < costo.length; ef++) {
+                            costo[ef] = null;
+                        }
 
                     } else {
                         txtMsg.setText("Ingrese una cantidad de dinero mayor al total");
@@ -859,14 +876,14 @@ public class panelCobro extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_txtCobroMouseClicked
-    
-    private String cortarCad(int i, int f, String cad){
-        if(cad.length()>f){
-            return cad.substring(i,f);
+
+    private String cortarCad(int i, int f, String cad) {
+        if (cad.length() > f) {
+            return cad.substring(i, f);
         }
         return cad;
     }
-    
+
     public String formatoServicios(ArrayList<Costoservicio> lo) {
         String articulos = "";
         //"======SERVICIOS SOLICITADOS=====\n"
@@ -901,6 +918,8 @@ public class panelCobro extends javax.swing.JPanel {
         totalPagar.setEnabled(false);
         extraSuciedad.setSelected(false);
         servInterior.setSelected(false);
+        btnCobrar.setEnabled(false);
+        txtCobro.setEnabled(false);
         for (int h = 0; h < costo.length; h++) {
             costo[h] = null;
         }
@@ -1110,7 +1129,7 @@ public class panelCobro extends javax.swing.JPanel {
                 servicioCB.repaint();
                 tamañoVehiculoCB.repaint();
                 servInterior.setEnabled(true);
-                
+
                 repaint();
                 break;
             case 1:
@@ -1126,7 +1145,7 @@ public class panelCobro extends javax.swing.JPanel {
                 servicioCB.addItem("Lavado con encerado (pasta)");
                 servicioCB.addItem("Lavado con encerado (pasta premium)");
                 servInterior.setEnabled(true);
-                
+
                 repaint();
                 break;
             case 2:
@@ -1148,16 +1167,19 @@ public class panelCobro extends javax.swing.JPanel {
                 tamañoVehiculoCB.addItem("Mediana");
                 servicioCB.addItem("Solo Lavado");
                 servicioCB.addItem("Lavado con cera");
-                servicioCB.addItem("Lavado con crema"); 
+                servicioCB.addItem("Lavado con crema");
                 servInterior.setSelected(false);
                 servInteriorActionPerformed(evt);
                 servInterior.setEnabled(false);
-                
+
                 servicioCB.repaint();
                 tamañoVehiculoCB.repaint();
-                break;
-        }
 
+                break;
+
+        }
+        extraSuciedad.setSelected(false);
+        //extraSuciedadActionPerformed(evt);
 
     }//GEN-LAST:event_tipoVehiculoCBActionPerformed
 
@@ -1323,6 +1345,31 @@ public class panelCobro extends javax.swing.JPanel {
                     case 0:
                         idTipo = listTipoV.get(tipoVehiculoCB.getSelectedIndex()).getIdTipoVehiculo();
                         idTama = listTamanio.get(0).getIdTamanio();
+                        if (servicioCB.getSelectedIndex() > -1) {
+                            idServ = listServ.get(servicioCB.getSelectedIndex()).getIdServicio();
+                            System.out.println(idServ);
+                            idTipoVehiculoF = idTipo;
+                            idTamañoF = idTama;
+                            idServicioF = idServ;
+                            buscarPrecio(idTipo, idTama, idServ);
+                            totalPagar.setText("" + total);
+                        }
+                        break;
+                    case 1:
+                        idTipo = listTipoV.get(tipoVehiculoCB.getSelectedIndex()).getIdTipoVehiculo();
+                        idTama = listTamanio.get(1).getIdTamanio();
+                        if (servicioCB.getSelectedIndex() > -1) {
+                            idServ = listServ.get(servicioCB.getSelectedIndex()).getIdServicio();
+                            System.out.println(idServ);
+                            idTipoVehiculoF = idTipo;
+                            idTamañoF = idTama;
+                            idServicioF = idServ;
+                            buscarPrecio(idTipo, idTama, idServ);
+                            totalPagar.setText("" + total);
+                        }
+                        break;
+                    /*
+                        
                         switch (servicioCB.getSelectedIndex()) {
                             case 0:
                                 idServ = listServ.get(0).getIdServicio();
@@ -1365,10 +1412,11 @@ public class panelCobro extends javax.swing.JPanel {
                         idServicioF = idServ;
                         buscarPrecio(idTipo, idTama, idServ);
                         totalPagar.setText("" + total);
-                        break;
+                        break;*/
                 }
                 break;
         }
+        extraSuciedad.setSelected(false);
     }//GEN-LAST:event_servicioCBActionPerformed
 
     private void extraSuciedadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extraSuciedadActionPerformed
@@ -1376,6 +1424,7 @@ public class panelCobro extends javax.swing.JPanel {
             if (servicioCB.getSelectedIndex() < 3) {
                 for (Costoservicio oe : listCosto) {
                     if (oe.getServicioidServicio().getIdServicio() == 410) {
+                        
                         total += oe.getPrecio();
                         totalPagar.setText("" + total);
                         costo[2] = oe;
@@ -1384,15 +1433,18 @@ public class panelCobro extends javax.swing.JPanel {
                 }
             }
         } else {
-            for (Costoservicio oe : listCosto) {
-                if (oe.getServicioidServicio().getIdServicio() == 410) {
-                    total -= oe.getPrecio();
-                    costo[2] = null;
-                    totalPagar.setText("" + total);
-                    repaint();
+            if (!extraSuciedad.isSelected()) {
+                for (Costoservicio oe : listCosto) {
+                    if (oe.getServicioidServicio().getIdServicio() == 410) {
+                        total -= oe.getPrecio();
+                        costo[2] = null;
+                        totalPagar.setText("" + total);
+                        repaint();
+                    }
                 }
             }
         }
+        
     }//GEN-LAST:event_extraSuciedadActionPerformed
 
     private void servInteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servInteriorActionPerformed
@@ -1418,26 +1470,27 @@ public class panelCobro extends javax.swing.JPanel {
 
         } else {
             if (!servInterior.isSelected()) {
-            btnIndividual.setEnabled(false);
-            btnPaquete.setEnabled(false);
+                btnIndividual.setEnabled(false);
+                btnPaquete.setEnabled(false);
 
-            tNAsientos.setEnabled(false);
-            noAsientos.setEnabled(false);
-            separadorNA.setEnabled(true);
+                tNAsientos.setEnabled(false);
+                noAsientos.setEnabled(false);
+                separadorNA.setEnabled(true);
 
-            noAsientos.setForeground(Color.GRAY);
-            noAsientos.setText("0");
+                noAsientos.setForeground(Color.GRAY);
+                noAsientos.setText("0");
 
-            tTamaño.setEnabled(false);
-            tamañoLICB.setEnabled(false);
-            tPaquete.setEnabled(false);
-            paqueteLICB.setEnabled(false);
-            total -= totalTemp;
-            totalPagar.setText("" + total);
-            totalTemp = 0;
-            costo[1] = null;
+                tTamaño.setEnabled(false);
+                tamañoLICB.setEnabled(false);
+                tPaquete.setEnabled(false);
+                paqueteLICB.setEnabled(false);
+                total -= totalTemp;
+                totalPagar.setText("" + total);
+                totalTemp = 0;
+                costo[1] = null;
 
-            repaint();}
+                repaint();
+            }
         }
     }//GEN-LAST:event_servInteriorActionPerformed
 

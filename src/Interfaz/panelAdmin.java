@@ -23,7 +23,9 @@ public class panelAdmin extends javax.swing.JPanel {
      * Creates new form panelAdmin
      */
     public panelAdmin() {
+        
         initComponents();
+        System.out.println("Si crea el panel");
         btnAdminUEstado = true;
         btnPagoEstado = false;
         btnPrecioEstado = false;

@@ -64,6 +64,7 @@ public class loginAdmin extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         mensajeLogin = new javax.swing.JLabel();
+        olvidoContra = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(null);
@@ -121,6 +122,11 @@ public class loginAdmin extends javax.swing.JPanel {
 
         btnAceptarIS.setBackground(new java.awt.Color(102, 204, 255));
         btnAceptarIS.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 17, 17)));
+        btnAceptarIS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAceptarISMouseClicked(evt);
+            }
+        });
 
         txtAceptarIS.setBackground(new java.awt.Color(255, 255, 255));
         txtAceptarIS.setFont(new java.awt.Font("Roboto Condensed", 1, 16)); // NOI18N
@@ -221,6 +227,18 @@ public class loginAdmin extends javax.swing.JPanel {
         mensajeLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cuerpo.add(mensajeLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(511, 530, 400, 30));
 
+        olvidoContra.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
+        olvidoContra.setForeground(new java.awt.Color(0, 0, 153));
+        olvidoContra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        olvidoContra.setText("¿Olvidó su contraseña?");
+        olvidoContra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        olvidoContra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                olvidoContraMouseClicked(evt);
+            }
+        });
+        cuerpo.add(olvidoContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 440, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -274,6 +292,51 @@ public class loginAdmin extends javax.swing.JPanel {
 
     private void txtAceptarISMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAceptarISMouseClicked
         //Aqui se colocara la validación de usuario administrador
+        try{
+        System.out.println("Parte 1");
+        if (nombreUsuarioTxt.getText().equalsIgnoreCase("Ingrese su nombre de usuario") || nombreUsuarioTxt.getText().equalsIgnoreCase("")
+                || passwordTxt.getPassword().toString().equalsIgnoreCase("") || passwordTxt.getPassword().toString().equalsIgnoreCase("********")) {
+            
+            System.out.println("Primer if");
+            mensajeLogin.setText("Ingrese credenciales");
+            repaint();
+        } else {
+            for (int a = 0; a < admins.size(); a++) {
+                //System.out.println("Si entro al for" + admins.get(a).getUsuarioidUsuario().getNombre() + passwordTxt.getPassword().toString());
+                if (nombreUsuarioTxt.getText().equalsIgnoreCase(admins.get(a).getUsuarioidUsuario().getNombre())
+                        && String.valueOf(passwordTxt.getPassword()).equalsIgnoreCase(admins.get(a).getContrasenia())) {
+                    mensajeLogin.setText(" ");
+                    //mensajeLogin.setText("Si ingreso");
+                    
+                    panelAdmin p2 = new panelAdmin();
+
+                    p2.setSize(1020, 570);
+                    p2.setLocation(0, 0);
+
+                    this.removeAll();
+                    repaint();
+                    this.add(p2, BorderLayout.CENTER);
+                    this.revalidate();
+                    this.repaint();
+                }else{
+                    if(a == (admins.size() - 1)){
+                        mensajeLogin.setText("Credenciales incorrectas");
+                        repaint();
+                    }
+                }
+            }
+        }
+        }catch(Exception E){
+            mensajeLogin.setText(E.getMessage());
+            nombreUsuarioTxt.setText(E.getMessage());
+            repaint();
+        }
+
+
+    }//GEN-LAST:event_txtAceptarISMouseClicked
+
+    private void btnAceptarISMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarISMouseClicked
+        //Aqui se colocara la validación de usuario administrador
         System.out.println("Parte 1");
         if (nombreUsuarioTxt.getText().equalsIgnoreCase("Ingrese su nombre de usuario") || nombreUsuarioTxt.getText().equalsIgnoreCase("")
                 || passwordTxt.getPassword().toString().equalsIgnoreCase("") || passwordTxt.getPassword().toString().equalsIgnoreCase("********")) {
@@ -306,8 +369,12 @@ public class loginAdmin extends javax.swing.JPanel {
             }
         }
 
+    }//GEN-LAST:event_btnAceptarISMouseClicked
 
-    }//GEN-LAST:event_txtAceptarISMouseClicked
+    private void olvidoContraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_olvidoContraMouseClicked
+        ventanaRecuperarContraseña ae = new ventanaRecuperarContraseña(new javax.swing.JFrame(), true);
+        
+    }//GEN-LAST:event_olvidoContraMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -324,6 +391,7 @@ public class loginAdmin extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel mensajeLogin;
     private javax.swing.JTextField nombreUsuarioTxt;
+    private javax.swing.JLabel olvidoContra;
     private javax.swing.JPanel panelIco;
     private javax.swing.JPasswordField passwordTxt;
     private javax.swing.JLabel txtAceptarIS;

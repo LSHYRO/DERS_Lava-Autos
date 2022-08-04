@@ -8,6 +8,7 @@ package Interfaz;
 import Conexion.Conect;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Toolkit;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.border.LineBorder;
@@ -30,6 +31,7 @@ public class interfaz_Principal extends javax.swing.JFrame {
     public interfaz_Principal() {
         
         initComponents();
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/recursos/icono (1).png")));
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("LavaAutos_DERSPU");
         setLocationRelativeTo(null);
         panelCobro p2 = new panelCobro();

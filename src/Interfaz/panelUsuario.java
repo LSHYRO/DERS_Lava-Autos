@@ -11,7 +11,7 @@ import Controllers.exceptions.IllegalOrphanException;
 import Controllers.exceptions.NonexistentEntityException;
 import EntityClasses.Lavador;
 import EntityClasses.Usuario;
-import Modelos.ModeloLavadores;
+import modelos.ModeloLavadores;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.util.List;

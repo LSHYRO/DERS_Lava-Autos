@@ -6,6 +6,7 @@
 package Interfaz;
 
 import Controllers.*;
+import Controllers.exceptions.NonexistentEntityException;
 import EntityClasses.*;
 import java.awt.Color;
 import java.io.IOException;
@@ -77,6 +78,7 @@ public class panelCorte extends javax.swing.JPanel {
     private TicketCorte ticketC;
     private Date dt;
     private boolean find;
+    private ModeloServiciosSolicitados modSS;
     public panelCorte() {
         initComponents();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("LavaAutos_DERSPU");
@@ -146,8 +148,6 @@ public class panelCorte extends javax.swing.JPanel {
         jSeparator3 = new javax.swing.JSeparator();
         btnCalcCorte = new javax.swing.JPanel();
         txtCalcCorte = new javax.swing.JLabel();
-        btnImpComp = new javax.swing.JPanel();
-        txtImpComp = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
 
@@ -276,7 +276,7 @@ public class panelCorte extends javax.swing.JPanel {
 
         txtCalcCorte.setFont(new java.awt.Font("Roboto Medium", 1, 15)); // NOI18N
         txtCalcCorte.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtCalcCorte.setText("Calcular sueldo");
+        txtCalcCorte.setText("Registrar corte");
         txtCalcCorte.setEnabled(false);
         txtCalcCorte.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -299,47 +299,16 @@ public class panelCorte extends javax.swing.JPanel {
         btnCalcCorte.setLayout(btnCalcCorteLayout);
         btnCalcCorteLayout.setHorizontalGroup(
             btnCalcCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtCalcCorte, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+            .addGroup(btnCalcCorteLayout.createSequentialGroup()
+                .addComponent(txtCalcCorte, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                .addContainerGap())
         );
         btnCalcCorteLayout.setVerticalGroup(
             btnCalcCorteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(txtCalcCorte, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
         );
 
-        add(btnCalcCorte, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 470, -1, 30));
-
-        btnImpComp.setBackground(new java.awt.Color(153, 153, 255));
-        btnImpComp.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        btnImpComp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        txtImpComp.setFont(new java.awt.Font("Roboto Medium", 1, 15)); // NOI18N
-        txtImpComp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtImpComp.setText("Imprimir comprobante");
-        txtImpComp.setEnabled(false);
-        txtImpComp.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtImpCompMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                txtImpCompMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                txtImpCompMouseExited(evt);
-            }
-        });
-
-        javax.swing.GroupLayout btnImpCompLayout = new javax.swing.GroupLayout(btnImpComp);
-        btnImpComp.setLayout(btnImpCompLayout);
-        btnImpCompLayout.setHorizontalGroup(
-            btnImpCompLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtImpComp, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-        );
-        btnImpCompLayout.setVerticalGroup(
-            btnImpCompLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtImpComp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-        );
-
-        add(btnImpComp, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 470, 180, 30));
+        add(btnCalcCorte, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 470, 170, 30));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 153));
 
@@ -361,6 +330,7 @@ public class panelCorte extends javax.swing.JPanel {
 
     private void txtBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuscarMouseClicked
         // BotonBuscar
+        
         find = false;
         if(listServicioS.isEmpty() ){
             txtMensajeCodUsu.setText("No hay ningun registro en la BD");
@@ -404,33 +374,47 @@ public class panelCorte extends javax.swing.JPanel {
                 vaciar();
                 return;
             }
+       
+        
+        listServicioS = jpaServicioS.findServiciosolicitadoEntities();
          dt = jDateChooser1.getDate();
-
+         long fecha = dt.getTime();
+        java.sql.Date fecha1 = new java.sql.Date(fecha);
+        System.out.println("owo num  "+listServicioS.size());
         servLav = new ArrayList<Serviciosolicitado>();
         totalServicios =0.0;
         //System.out.println("Feacha DCH "+dt);
         for(int i =0; i<listServicioS.size(); i++){
+            System.out.println(listServicioS.get(i).getTicketidTicket().getLavadoridLavador().getIdLavador()+" - "+lavador.getIdLavador());
+            System.out.println(fecha1.toString()+" - "+listServicioS.get(i).getTicketidTicket().getFecha().toString());
+            Date f = listServicioS.get(i).getTicketidTicket().getFecha();
+            long f1 = f.getTime();
+            java.sql.Date fecha2 = new java.sql.Date(f1);
             if(listServicioS.get(i).getTicketidTicket().getLavadoridLavador().getIdLavador() == lavador.getIdLavador()
-                    &&  dt.equals(listServicioS.get(i).getTicketidTicket().getFecha())){
+                    &&  fecha1.toString().equals(fecha2.toString())){
                 servLav.add(listServicioS.get(i));
                 totalServicios +=listServicioS.get(i).getCostoServicioidServicioCosto().getPrecio();
-                
+                System.out.println(i+"  id listaServS"+listServicioS.get(i).getIdServicioSolicitado()+"  Tickcet id  "+listServicioS.get(i).getTicketidTicket().getIdTicket());
             }
             //System.out.println("ID lavador "+listServicioS.get(i).getTicketidTicket().getLavadoridLavador().getIdLavador());
             //System.out.println("fecha for "+listServicioS.get(i).getTicketidTicket().getFecha());
+            System.out.println("indice jijijija "+i);
         }
-        jLabel3.setText(totalServicios+"");
+        jLabel3.setText("$"+totalServicios);
         if(servLav.isEmpty()){
             find = false;
             txtMensajeCodUsu.setText("Al parecer no tienes ningun registro");
             vaciar();
             return;
         }
-        ModeloServiciosSolicitados modSS = new ModeloServiciosSolicitados(servLav);
+        modSS = new ModeloServiciosSolicitados(servLav);
+        
         jTable1.setModel(modSS);
         jTable1.repaint();
         jLabel3.setText(totalServicios+"");
         txtCalcCorte.setEnabled(true);
+        modSS.fireTableDataChanged();
+        repaint();
     }//GEN-LAST:event_txtBuscarMouseClicked
     
     private void vaciar(){
@@ -440,7 +424,6 @@ public class panelCorte extends javax.swing.JPanel {
         jTable1.repaint();
         jLabel3.setText("00.0");
         txtCalcCorte.setEnabled(false);
-        txtImpComp.setEnabled(false);
         jTextArea1.setText("");
         //jScrollPane2.removeAll();
         //jScrollPane2.add(jTextArea1);
@@ -452,28 +435,6 @@ public class panelCorte extends javax.swing.JPanel {
         // Boton Calcular Sueldo
         
     }//GEN-LAST:event_txtCalcCorteKeyPressed
-
-    private void txtImpCompMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtImpCompMouseClicked
-        if(!txtImpComp.isEnabled()){
-            return;
-        }
-        if(find == false){
-            return;
-        }
-        try {
-            // TODO add your handling code here:
-            ticketC.print(true);
-        } catch (IOException ex) {
-            Logger.getLogger(panelCorte.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (PrintException ex) {
-            Logger.getLogger(panelCorte.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        txtCalcCorte.setEnabled(false);
-        txtImpComp.setEnabled(false);
-        jTextArea1.setText("");
-        jTable1.removeAll();
-        jTable1.repaint();
-    }//GEN-LAST:event_txtImpCompMouseClicked
 
     private void txtCalcCorteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCalcCorteMouseClicked
         // Boton para calcular el sueldo
@@ -545,7 +506,7 @@ public class panelCorte extends javax.swing.JPanel {
                     ticketC.setFecha(""+fecha1);
                     ticketC.setArticulos(lista);
                     ticketC.setTotal(totalServicios+"");
-                    ticketC.setPorcentaje(lavador.getComision()+"%");
+                    ticketC.setPorcentaje(lavador.getComision()+"");
                     ticketC.setSubTotal(totalServicios*(lavador.getComision()/100)+"");
                     ticketC.setIDVendedor(lavador.getIdLavador()+"");
                     ticketC.setVendedor(lavador.getUsuarioidUsuario().getNombre());
@@ -555,7 +516,19 @@ public class panelCorte extends javax.swing.JPanel {
                     //jScrollPane2.add(jTextArea1);
                     jScrollPane2.repaint();
                     txtMensajeCorteRe.setText("EL CORTE YA FUE REALIZADO ANTERIORMENTE");
-                    txtImpComp.setEnabled(true);
+             
+                    corte = listCorte.get(i);
+                    corte.setFecha(corte.getFecha());
+                    corte.setMonto(totalServicios);
+                    corte.setLavadoridLavador(corte.getLavadoridLavador());
+                    corte.setIdCorte(corte.getIdCorte());
+                    try {
+                        jpaCorte.edit(corte);
+                    } catch (NonexistentEntityException ex) {
+                        Logger.getLogger(panelCorte.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(panelCorte.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     return;
                 }
             }
@@ -583,7 +556,6 @@ public class panelCorte extends javax.swing.JPanel {
         corte.setIdCorte(idcorte);
         jpaCorte.create(corte);
         listCorte.add(corte);
-        txtImpComp.setEnabled(true);
         txtMensajeCorteRe.setText("CORTE REALIZADO CORRECTAMENTE");
     }//GEN-LAST:event_txtCalcCorteMouseClicked
 
@@ -594,14 +566,6 @@ public class panelCorte extends javax.swing.JPanel {
     private void txtBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuscarMouseExited
         btnBuscar.setBackground(new Color(214,217,223));//214,217,223
     }//GEN-LAST:event_txtBuscarMouseExited
-
-    private void txtImpCompMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtImpCompMouseEntered
-        btnImpComp.setBackground(new Color(202,217,203));//[214,217,223]
-    }//GEN-LAST:event_txtImpCompMouseEntered
-
-    private void txtImpCompMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtImpCompMouseExited
-        btnImpComp.setBackground(new Color(214,217,223));
-    }//GEN-LAST:event_txtImpCompMouseExited
 
     private void txtCalcCorteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCalcCorteMouseEntered
         btnCalcCorte.setBackground(new Color(202,217,203));//[214,217,223]
@@ -622,7 +586,6 @@ public class panelCorte extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnBuscar;
     private javax.swing.JPanel btnCalcCorte;
-    private javax.swing.JPanel btnImpComp;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDayChooser jDayChooser1;
     private javax.swing.JLabel jLabel1;
@@ -646,7 +609,6 @@ public class panelCorte extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel txtBuscar;
     private javax.swing.JLabel txtCalcCorte;
-    private javax.swing.JLabel txtImpComp;
     private javax.swing.JLabel txtMensajeCodUsu;
     private javax.swing.JLabel txtMensajeCorteRe;
     private javax.swing.JLabel txtNombreEmpleado;

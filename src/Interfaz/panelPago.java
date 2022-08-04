@@ -8,13 +8,19 @@ package Interfaz;
 import java.awt.Color;
 import EntityClasses.*;
 import Controllers.*;
-import Modelos.ModeloCortes;
-import Modelos.ModeloPagos;
+import modelos.ModeloCortes;
+import modelos.ModeloPagos;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.print.PrintException;
+import modelos.TicketCorte;
+import modelos.TicketPago;
 
 /**
  *
@@ -71,9 +77,15 @@ public class panelPago extends javax.swing.JPanel {
     private List<Corte> cortesEnElMes;
     private Date date;
     private int idcorte;
-    private boolean find;
+    private boolean select;
     private ModeloPagos modPagos;
     private ModeloCortes  modCortes;
+    private Date dtS;
+    private List<Corte> cortesFiltrados;
+    private TicketPago ticketP ;
+    private double totalServicios;
+    private List<Serviciosolicitado> servLav;
+    private boolean filtrado;
 
     public panelPago() {
         initComponents();
@@ -113,6 +125,12 @@ public class panelPago extends javax.swing.JPanel {
         
         //Equis somos chavos
         initTables();
+    }
+    private String cortarCad(int i, int f, String cad){
+        if(cad.length()>f){
+            return cad.substring(i,f);
+        }
+        return cad;
     }
     public void initTables(){
         //Inicializamos las tablas
@@ -196,7 +214,6 @@ public class panelPago extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        numIdCorte = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -206,7 +223,6 @@ public class panelPago extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         txtFecha = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         btnBuscar = new javax.swing.JPanel();
         txtBuscar = new javax.swing.JLabel();
@@ -215,6 +231,7 @@ public class panelPago extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true));
@@ -238,27 +255,8 @@ public class panelPago extends javax.swing.JPanel {
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
-        jLabel5.setText("ID del corte: ");
+        jLabel5.setText("Fecha del corte");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 108, -1, 20));
-
-        numIdCorte.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
-        numIdCorte.setForeground(new java.awt.Color(153, 153, 153));
-        numIdCorte.setText("Ingresa el ID del corte");
-        numIdCorte.setBorder(null);
-        numIdCorte.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                numIdCorteFocusLost(evt);
-            }
-        });
-        numIdCorte.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                numIdCorteMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                numIdCorteMouseReleased(evt);
-            }
-        });
-        add(numIdCorte, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, 200, -1));
 
         jTable1.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -288,6 +286,11 @@ public class panelPago extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(606, 250, 390, 260));
@@ -304,11 +307,11 @@ public class panelPago extends javax.swing.JPanel {
                 txtNombreLavMousePressed(evt);
             }
         });
-        add(txtNombreLav, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, 80, -1));
+        add(txtNombreLav, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, 160, -1));
 
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
         jLabel8.setText("A la fecha:");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, -1, -1));
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 170, -1, -1));
 
         txtFecha.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
         txtFecha.setForeground(new java.awt.Color(102, 102, 102));
@@ -318,10 +321,9 @@ public class panelPago extends javax.swing.JPanel {
                 txtFechaMousePressed(evt);
             }
         });
-        add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 170, 110, -1));
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 190, 110, 10));
-        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 200, 10));
-        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, 80, 10));
+        add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 170, 110, -1));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 190, 110, 10));
+        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, 160, 10));
 
         btnBuscar.setBackground(new java.awt.Color(255, 204, 204));
         btnBuscar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -346,19 +348,18 @@ public class panelPago extends javax.swing.JPanel {
         btnBuscar.setLayout(btnBuscarLayout);
         btnBuscarLayout.setHorizontalGroup(
             btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addComponent(txtBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
         );
         btnBuscarLayout.setVerticalGroup(
             btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(txtBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
         );
 
-        add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, -1, 30));
+        add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(523, 100, 110, 30));
 
         btnRealizarPagar.setBackground(new java.awt.Color(255, 204, 204));
         btnRealizarPagar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         btnRealizarPagar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnRealizarPagar.setEnabled(false);
 
         txtRealizarPagar.setFont(new java.awt.Font("Roboto Medium", 1, 15)); // NOI18N
         txtRealizarPagar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -408,13 +409,14 @@ public class panelPago extends javax.swing.JPanel {
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 540));
 
         jLabel11.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
-        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 230, 30));
+        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, 350, 30));
+        add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, 160, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuscarMouseClicked
         //Aquí va lo que realizará el boton buscar
-        find = false;
-        if (listCorte.isEmpty()) {
+        // = false;
+        /*if (listCorte.isEmpty()) {
             jLabel10.setText("Al parecer no se ha realizado ningun corte");
             return;
         }
@@ -422,6 +424,7 @@ public class panelPago extends javax.swing.JPanel {
             jLabel10.setText("Ingresa un ID de corte");
             return;
         }
+        
         try {
             idcorte = Integer.parseInt(numIdCorte.getText());
             for (Corte cut : listCorte) {
@@ -448,19 +451,151 @@ public class panelPago extends javax.swing.JPanel {
             find = false;
             jLabel11.setText("ID No encontrado");
         }
-        
+        */
+        filtrado = false;
+        cortesFiltrados = new ArrayList<Corte>();
+        Date dt1;
+        dtS = jDateChooser1.getDate();
+        long fecha = dtS.getTime();
+        java.sql.Date fecha1 = new java.sql.Date(fecha);
+        for(int i=0; i< cortesSinPagar.size(); i++){
+            dt1 = cortesSinPagar.get(i).getFecha();
+            long fech = dt1.getTime();
+            java.sql.Date fecha2 = new java.sql.Date(fech);
+            if(fecha1.toString().equals(fecha2.toString())){
+                cortesFiltrados.add(cortesSinPagar.get(i));
+            }
+        }
+        if(cortesFiltrados.isEmpty()){
+            jLabel11.setText("Al parecer no tienes cortes SIN PAGAR a esa fecha");
+            ModeloCortes modCortes = new ModeloCortes(cortesSinPagar);
+            jTable2.setModel(modCortes);
+            jTable2.repaint();
+            return;
+        }
+        filtrado = true;
+        select = false;
+        ModeloCortes modCortes = new ModeloCortes(cortesFiltrados);
+        jLabel11.setText("");
+        jTable2.setModel(modCortes);
+        jTable2.repaint();
+        txtRealizarPagar.setEnabled(true);
     }//GEN-LAST:event_txtBuscarMouseClicked
 
     private void txtRealizarPagarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtRealizarPagarMouseClicked
-        if(find == false){ 
+        if(select == false){ 
             return;
         }
+        if(corte == null){
+            return;
+        }
+        
         for(int i=0; i<pagosEnElMes.size(); i++){
             if(pagosEnElMes.get(i).getCorteidCorte().getIdCorte() == corte.getIdCorte()){
                 jLabel11.setText("Este corte ya fue pagado");
                 return;
             }
         }
+        
+        
+        
+        
+        //Imprimir tickets
+        /*
+        dtS = jDateChooser1.getDate();
+        long fecha = dtS.getTime();
+        java.sql.Date fecha1 = new java.sql.Date(fecha);
+        servLav = new ArrayList<Serviciosolicitado>();
+        totalServicios =0.0;
+        //System.out.println("Feacha DCH "+dt);
+        for(int i =0; i<listServicioS.size(); i++){
+            if(listServicioS.get(i).getTicketidTicket().getLavadoridLavador().getIdLavador() == lavador.getIdLavador()
+                    &&  fecha1.equals(listServicioS.get(i).getTicketidTicket().getFecha())){
+                servLav.add(listServicioS.get(i));
+                totalServicios +=listServicioS.get(i).getCostoServicioidServicioCosto().getPrecio();
+                
+            }
+            //System.out.println("ID lavador "+listServicioS.get(i).getTicketidTicket().getLavadoridLavador().getIdLavador());
+            //System.out.println("fecha for "+listServicioS.get(i).getTicketidTicket().getFecha());
+        }
+        int [][] totales = new int[2][listCosto.size()];
+        for(int i=0; i<listCosto.size();i++){
+            totales[0][i] = listCosto.get(i).getIdServicioCosto();
+            totales[1][i] =0;
+            
+        }
+        
+        for(int i=0;i< listCosto.size(); i++){
+            for (int j=0; j< servLav.size(); j++){
+                if(totales[0][i] == servLav.get(j).getCostoServicioidServicioCosto().getIdServicioCosto()){
+                    totales[1][i] ++;
+                }
+                //System.out.println(totales[0][i]+"  "+totales[1][i]);
+            }
+            
+        }
+        String lista = "";
+        
+        for(int i=0; i< listCosto.size(); i++){
+            
+            if(totales[1][i] >0){
+                try{
+            lista+= String.format("%15s %7s %5s %2d\n",
+                    cortarCad(0,14,listCosto.get(i).getServicioidServicio().getNombreServicio()),
+                    cortarCad(0,6,listCosto.get(i).getTipoVehiculoidTipoVehiculo().getDescripcion()),
+                    cortarCad(0,4,listCosto.get(i).getTamanioidTamanio().getDescripcion()),
+                    totales[1][i]);
+            }catch(NullPointerException e){
+                lista+= String.format("%15s %7s %5s %2d\n",
+                    cortarCad(0,14,listCosto.get(i).getServicioidServicio().getNombreServicio()),
+                    "NA",
+                    cortarCad(0,4,listCosto.get(i).getTamanioidTamanio().getDescripcion()),
+                    totales[1][i]);
+            }
+                    }
+        }
+        System.out.println(lista);*/
+        if(ticketP!=null){
+            ticketP = null;
+        }
+        Date dtC = corte.getFecha();
+        long fecha = dtC.getTime();
+        java.sql.Date fechaC = new java.sql.Date(fecha);
+        
+        long fecha1 = date.getTime();
+        java.sql.Date fechaP = new java.sql.Date(fecha1);
+        
+        double comision = 0;
+        for(Lavador lav : listLavador){
+            if(corte.getLavadoridLavador().getIdLavador() == lav.getIdLavador()){
+                comision = lav.getComision();
+                break;
+            }
+        }
+        
+        ticketP = new TicketPago();
+        
+        ticketP.setFolio(corte.getIdCorte()+"");
+        ticketP.setFechaC(fechaC+"");
+        ticketP.setFechaP(fechaP+"");
+        ticketP.setTotal(corte.getMonto()+"");
+        ticketP.setPorcentaje(comision+"");
+        ticketP.setSalario(corte.getMonto()*(comision/100)+"");
+        ticketP.setIDVendedor(corte.getLavadoridLavador().getIdLavador()+"");
+        ticketP.setVendedor(corte.getLavadoridLavador().getUsuarioidUsuario().getNombre());
+        
+        ticketP.imprimirTicket();
+        
+        try {
+            ticketP.print(true);
+        } catch (IOException ex) {
+            Logger.getLogger(panelPago.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PrintException ex) {
+            Logger.getLogger(panelPago.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        //Agregacion del corte sin pagar a la tabla pago
         int idPago;
         if (!listPago.isEmpty()) {
             idPago = listPago.get(listPago.size() - 1).getIdPago() + 1;
@@ -477,10 +612,15 @@ public class panelPago extends javax.swing.JPanel {
         cortesSinPagar = new ArrayList<Corte>();
         pagosEnElMes = new ArrayList<Pago>();
         cortesEnElMes = new ArrayList<Corte>();
+        jTable1.removeAll();
+        jTable2.removeAll();
         initTables();
         jScrollPane1.repaint();
         jScrollPane2.repaint();
         btnRealizarPagar.setEnabled(false);
+        
+        filtrado = false;
+        txtRealizarPagar.setEnabled(false);
     }//GEN-LAST:event_txtRealizarPagarMouseClicked
 
     private void txtBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuscarMouseEntered
@@ -499,13 +639,6 @@ public class panelPago extends javax.swing.JPanel {
         btnRealizarPagar.setBackground(new Color(255, 204, 204));//[255,204,204]
     }//GEN-LAST:event_txtRealizarPagarMouseExited
 
-    private void numIdCorteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_numIdCorteMousePressed
-        if(numIdCorte.getText().equalsIgnoreCase("Ingresa el ID del corte")){
-            numIdCorte.setText("");
-            numIdCorte.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_numIdCorteMousePressed
-
     private void txtNombreLavMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNombreLavMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreLavMousePressed
@@ -514,21 +647,30 @@ public class panelPago extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaMousePressed
 
-    private void numIdCorteMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_numIdCorteMouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_numIdCorteMouseReleased
-
-    private void numIdCorteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_numIdCorteFocusLost
-        if(numIdCorte.getText().equalsIgnoreCase("Ingresa el ID del corte") || numIdCorte.getText().equalsIgnoreCase("")){
-            numIdCorte.setText("Ingresa el ID del corte");
-            numIdCorte.setForeground(Color.GRAY);
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // Para regresar  lo que
+        //if(jTable1.)
+        corte = null;
+        if(filtrado){
+        corte =  cortesFiltrados.get(jTable2.getSelectedRow());
+        
         }
-    }//GEN-LAST:event_numIdCorteFocusLost
+        else{
+            corte = cortesSinPagar.get(jTable2.getSelectedRow());
+        }
+        txtNombreLav.setText(corte.getLavadoridLavador().getUsuarioidUsuario().getNombre());
+        Date dt = corte.getFecha();
+        long fecha = dt.getTime();
+        java.sql.Date fecha1 = new java.sql.Date(fecha);
+        txtFecha.setText(fecha1+"");
+        select = true;
+    }//GEN-LAST:event_jTable2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnBuscar;
     private javax.swing.JPanel btnRealizarPagar;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -542,11 +684,9 @@ public class panelPago extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField numIdCorte;
     private javax.swing.JLabel txtBuscar;
     private javax.swing.JLabel txtFecha;
     private javax.swing.JLabel txtNombreLav;

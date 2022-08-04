@@ -73,7 +73,7 @@
     <target name="-post-jar">
     <property name="store.jar.name" value="DERS_Lava-Autos"/>
  
-    <property name="store.dir" value="GRMA"/>
+    <property name="store.dir" value="ProgramaLibIncl"/>
     <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
  
     <echo message="Packaging ${application.title} into a single JAR at ${store.jar}"/>
@@ -84,6 +84,7 @@
  
         <manifest>
             <attribute name="Main-Class" value="${main.class}"/>
+            <attribute name="SplashScreen-Image" value="META-INF/PORTADA-14.jpg"/>
         </manifest>
     </jar>
  
