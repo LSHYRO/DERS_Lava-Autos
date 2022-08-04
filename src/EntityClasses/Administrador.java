@@ -29,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Administrador.findAll", query = "SELECT a FROM Administrador a"),
     @NamedQuery(name = "Administrador.findByIdAdministrador", query = "SELECT a FROM Administrador a WHERE a.idAdministrador = :idAdministrador"),
-    @NamedQuery(name = "Administrador.findByContrasenia", query = "SELECT a FROM Administrador a WHERE a.contrasenia = :contrasenia")})
+    @NamedQuery(name = "Administrador.findByContrasenia", query = "SELECT a FROM Administrador a WHERE a.contrasenia = :contrasenia"),
+    @NamedQuery(name = "Administrador.findByRespuesta", query = "SELECT a FROM Administrador a WHERE a.respuesta = :respuesta")})
 public class Administrador implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,6 +42,9 @@ public class Administrador implements Serializable {
     @Basic(optional = false)
     @Column(name = "contrasenia")
     private String contrasenia;
+    @Basic(optional = false)
+    @Column(name = "respuesta")
+    private String respuesta;
     @JoinColumn(name = "Usuario_idUsuario", referencedColumnName = "idUsuario")
     @ManyToOne(optional = false)
     private Usuario usuarioidUsuario;
@@ -52,9 +56,10 @@ public class Administrador implements Serializable {
         this.idAdministrador = idAdministrador;
     }
 
-    public Administrador(Integer idAdministrador, String contrasenia) {
+    public Administrador(Integer idAdministrador, String contrasenia, String respuesta) {
         this.idAdministrador = idAdministrador;
         this.contrasenia = contrasenia;
+        this.respuesta = respuesta;
     }
 
     public Integer getIdAdministrador() {
@@ -71,6 +76,14 @@ public class Administrador implements Serializable {
 
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
+    }
+
+    public String getRespuesta() {
+        return respuesta;
+    }
+
+    public void setRespuesta(String respuesta) {
+        this.respuesta = respuesta;
     }
 
     public Usuario getUsuarioidUsuario() {

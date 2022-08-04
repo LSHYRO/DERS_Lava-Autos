@@ -5,14 +5,23 @@
  */
 package Interfaz;
 
+import Controllers.AdministradorJpaController;
+import EntityClasses.Administrador;
 import java.awt.Color;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
  * @author juan6
  */
 public class ventanaRecuperarContraseña extends javax.swing.JDialog {
-
+    private Administrador admin;
+    private AdministradorJpaController cAdmin;
+    private List <Administrador> listaAdmins;
     /**
      * Creates new form ventanaRecuperarContraseña
      */
@@ -22,6 +31,10 @@ public class ventanaRecuperarContraseña extends javax.swing.JDialog {
         setSize(371, 467);
         setVisible(true); 
         setLocationRelativeTo(null);
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("LavaAutos_DERSPU");
+        cAdmin = new AdministradorJpaController(emf);
+        listaAdmins = cAdmin.findAdministradorEntities();
         
         //setFocusableWindowState(true);
         
@@ -54,10 +67,10 @@ public class ventanaRecuperarContraseña extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
-        jSeparator4 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        txtMsg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -196,7 +209,6 @@ public class ventanaRecuperarContraseña extends javax.swing.JDialog {
         cuerpo.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 335, 220, 7));
         cuerpo.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 220, 10));
         cuerpo.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 245, 220, 7));
-        cuerpo.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto Condensed", 1, 22)); // NOI18N
         jLabel4.setText("Cambiar contraseña");
@@ -222,6 +234,10 @@ public class ventanaRecuperarContraseña extends javax.swing.JDialog {
         );
 
         cuerpo.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 100, 50, 40));
+
+        txtMsg.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtMsg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        cuerpo.add(txtMsg, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 310, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -260,7 +276,32 @@ public class ventanaRecuperarContraseña extends javax.swing.JDialog {
     }//GEN-LAST:event_txtCancelarMouseExited
 
     private void txtAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAceptarMouseClicked
-        // TODO add your handling code here:
+        if(!(nombreUsuario.getText().equalsIgnoreCase("Ingrese el usuario")) && !(nombreUsuario.getText().equalsIgnoreCase(""))
+                && !(String.valueOf(nuevaContra.getPassword()).equalsIgnoreCase("********")) && !(String.valueOf(nuevaContra.getPassword()).equalsIgnoreCase("") &&
+                !(pregunta.getText().equalsIgnoreCase("Ingrese respuesta") && !(pregunta.getText().equalsIgnoreCase("")))
+                )){
+            for(int efe = 0; efe < listaAdmins.size(); efe++){
+                if(listaAdmins.get(efe).getUsuarioidUsuario().getNombre().equalsIgnoreCase(nombreUsuario.getText()) && 
+                        listaAdmins.get(efe).getRespuesta().equalsIgnoreCase(pregunta.getText())){
+                    listaAdmins.get(efe).setContrasenia(String.valueOf(nuevaContra.getPassword()));
+                    try {
+                        cAdmin.edit(listaAdmins.get(efe));
+                        txtMsg.setForeground(Color.BLACK);
+                        txtMsg.setText("La contraseña ha sido modificada");
+                        repaint();
+                    } catch (Exception ex) {
+                        Logger.getLogger(ventanaRecuperarContraseña.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    return;
+                }else{
+                    if(efe == (listaAdmins.size() - 1)){
+                        txtMsg.setForeground(Color.red);
+                        txtMsg.setText("Nombre de usuario o respuesta incorrecto");
+                        repaint();
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_txtAceptarMouseClicked
 
     private void txtAceptarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAceptarMouseEntered
@@ -327,12 +368,12 @@ public class ventanaRecuperarContraseña extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JTextField nombreUsuario;
     private javax.swing.JPasswordField nuevaContra;
     private javax.swing.JTextField pregunta;
     private javax.swing.JLabel tUsuario;
     private javax.swing.JLabel txtAceptar;
     private javax.swing.JLabel txtCancelar;
+    private javax.swing.JLabel txtMsg;
     // End of variables declaration//GEN-END:variables
 }
