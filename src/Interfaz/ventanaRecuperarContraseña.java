@@ -19,9 +19,11 @@ import javax.persistence.Persistence;
  * @author juan6
  */
 public class ventanaRecuperarContraseña extends javax.swing.JDialog {
+
     private Administrador admin;
     private AdministradorJpaController cAdmin;
-    private List <Administrador> listaAdmins;
+    private List<Administrador> listaAdmins;
+
     /**
      * Creates new form ventanaRecuperarContraseña
      */
@@ -29,17 +31,14 @@ public class ventanaRecuperarContraseña extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setSize(371, 467);
-        setVisible(true); 
+        setVisible(true);
         setLocationRelativeTo(null);
-        
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("LavaAutos_DERSPU");
         cAdmin = new AdministradorJpaController(emf);
         listaAdmins = cAdmin.findAdministradorEntities();
-        
+
         //setFocusableWindowState(true);
-        
-        
-        
     }
 
     /**
@@ -264,25 +263,24 @@ public class ventanaRecuperarContraseña extends javax.swing.JDialog {
     private void txtCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCancelarMouseClicked
         this.setVisible(false);
         this.dispose();
-        
+
     }//GEN-LAST:event_txtCancelarMouseClicked
 
     private void txtCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCancelarMouseEntered
-        btnCancelar.setForeground(new Color(150,167,198));//[163,163,204]
+        btnCancelar.setForeground(new Color(150, 167, 198));//[163,163,204]
     }//GEN-LAST:event_txtCancelarMouseEntered
 
     private void txtCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCancelarMouseExited
-        btnCancelar.setForeground(new Color(163,163,204));
+        btnCancelar.setForeground(new Color(163, 163, 204));
     }//GEN-LAST:event_txtCancelarMouseExited
 
     private void txtAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAceptarMouseClicked
-        if(!(nombreUsuario.getText().equalsIgnoreCase("Ingrese el usuario")) && !(nombreUsuario.getText().equalsIgnoreCase(""))
-                && !(String.valueOf(nuevaContra.getPassword()).equalsIgnoreCase("********")) && !(String.valueOf(nuevaContra.getPassword()).equalsIgnoreCase("") &&
-                !(pregunta.getText().equalsIgnoreCase("Ingrese respuesta") && !(pregunta.getText().equalsIgnoreCase("")))
-                )){
-            for(int efe = 0; efe < listaAdmins.size(); efe++){
-                if(listaAdmins.get(efe).getUsuarioidUsuario().getNombre().equalsIgnoreCase(nombreUsuario.getText()) && 
-                        listaAdmins.get(efe).getRespuesta().equalsIgnoreCase(pregunta.getText())){
+        if (!(nombreUsuario.getText().equalsIgnoreCase("Ingrese el usuario")) && !(nombreUsuario.getText().equalsIgnoreCase(""))
+                && !(String.valueOf(nuevaContra.getPassword()).equalsIgnoreCase("********")) && !(String.valueOf(nuevaContra.getPassword()).equalsIgnoreCase("")
+                && !(pregunta.getText().equalsIgnoreCase("Ingrese respuesta") && !(pregunta.getText().equalsIgnoreCase(""))))) {
+            for (int efe = 0; efe < listaAdmins.size(); efe++) {
+                if (listaAdmins.get(efe).getUsuarioidUsuario().getNombre().equalsIgnoreCase(nombreUsuario.getText())
+                        && listaAdmins.get(efe).getRespuesta().equalsIgnoreCase(pregunta.getText())) {
                     listaAdmins.get(efe).setContrasenia(String.valueOf(nuevaContra.getPassword()));
                     try {
                         cAdmin.edit(listaAdmins.get(efe));
@@ -293,23 +291,28 @@ public class ventanaRecuperarContraseña extends javax.swing.JDialog {
                         Logger.getLogger(ventanaRecuperarContraseña.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     return;
-                }else{
-                    if(efe == (listaAdmins.size() - 1)){
+                } else {
+                    if (efe == (listaAdmins.size() - 1)) {
                         txtMsg.setForeground(Color.red);
                         txtMsg.setText("Nombre de usuario o respuesta incorrecto");
                         repaint();
                     }
                 }
             }
+        } else {
+            txtMsg.setForeground(Color.red);
+            txtMsg.setText("Ingrese todos los datos");
+            repaint();
         }
+
     }//GEN-LAST:event_txtAceptarMouseClicked
 
     private void txtAceptarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAceptarMouseEntered
-        btnAceptar.setForeground(new Color(150,167,198));//[163,163,204]
+        btnAceptar.setForeground(new Color(150, 167, 198));//[163,163,204]
     }//GEN-LAST:event_txtAceptarMouseEntered
 
     private void txtAceptarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAceptarMouseExited
-        btnAceptar.setForeground(new Color(163,163,204));
+        btnAceptar.setForeground(new Color(163, 163, 204));
     }//GEN-LAST:event_txtAceptarMouseExited
 
     /**
